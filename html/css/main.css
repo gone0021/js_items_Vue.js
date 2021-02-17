@@ -1,0 +1,256 @@
+@charset "utf-8";
+
+/* ============
+class 
+============*/
+
+.container {
+    width: 86%;
+    margin: 0 auto 0 auto;
+}
+
+.align-r {
+    text-align: right;
+}
+
+.align-r-m3 {
+    text-align: right;
+    margin: 0 3% 0 0;
+}
+
+.align-l {
+    text-align: left;
+}
+
+.new {
+    float: left;
+    margin: auto 0;
+    display: none;
+}
+
+.even {
+    background-color: #f0f0f0;
+}
+
+.flt-l {
+    float: left;
+}
+
+.flt-r {
+    float: right;
+}
+
+.flt-u {
+    float: unset;
+}
+
+.goback {
+    float: right;
+}
+
+.item_name {
+    width: 600px;
+}
+
+.login_info {
+    float: right;
+}
+
+.login_info li {
+    list-style-type: none;
+    float: left;
+    margin-left: 10px;
+}
+
+.main-footer {
+    margin: 20px 0 20px 0;
+    width: 100%;
+    height: 40px;
+}
+
+.main-header {
+    margin: 20px 0 20px 0;
+    width: 100%;
+    height: 40px;
+}
+
+.mrg-r20 {
+    margin-right: 20px;
+}
+
+.odd {
+    background-color: none;
+}
+
+.search {
+    float: right;
+}
+
+.strong {
+    background-color: #fff0f5;
+    font-weight: bold;
+    color: firebrick;
+}
+
+.title {
+    float: left;
+}
+
+.warning {
+    background-color: #ffbbbb;
+    color: red;
+}
+
+
+/* ============
+id
+============*/
+
+#head-c {
+    margin: 25px 30px 0px 0px;
+}
+
+#head-l {
+    margin: 2px 0px 0px 3%;
+}
+
+#head-r {
+    margin: 5px 0% 0px 70%;
+}
+
+
+/* ============
+html 
+============*/
+
+h1 {
+    font-size: 32px;
+    margin: 0px;
+    padding: 4px;
+    color: #222288;
+    /* float: left; */
+}
+
+header {
+    border-bottom: 3px solid #a0a0a0;
+    height: 50px;
+}
+
+input.login_box {
+    width: 200px;
+}
+
+input.login_email {
+    width: 208px;
+    height: 30px;
+}
+
+main {
+    text-align: center;
+}
+
+input[type="text"] {
+    width: 100px;
+}
+
+input[type="datetime-local"] {
+    width: 200px;
+}
+
+select {
+    width: 100;
+}
+
+
+/* ============
+table 
+============*/
+
+table.login {
+    margin: 50px auto 30px auto;
+}
+
+table.list {
+    clear: both;
+    width: 100%;
+    margin: 20px auto 20px auto;
+}
+
+table.list th {
+    background-color: #222288;
+    color: white;
+    padding: 10px;
+}
+
+table.list td {
+    padding: 5px 10px;
+}
+
+table.list td form {
+    display: block;
+    float: left;
+}
+
+table.list td input[type="submit"] {
+    margin: 0px 2px;
+}
+
+/* ============
+html -class
+============*/
+
+p.error {
+    font-weight: bold;
+    color: #ff0000;
+}
+
+
+/* ============
+other
+============*/
+
+
+/* input[type="text"], input[type="password"], input[type="date"], textarea, select {
+  padding: 5px;
+  font-size: 16pt;
+} */
+
+
+/*モーダル*/
+#modal {
+  /* position: absolute; */
+  display:none;
+  position: fixed;
+  
+  top: 50%;
+  left: 50%;
+  margin-top:-180px;
+  margin-left:-240px;
+
+  background-color: #e6ecf0;
+  height: 360px;
+  width: 480px;
+  padding: 50px 0 40px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#glayLayer {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: black;
+    filter: alpha(opacity=60);
+    opacity: 0.60;
+}
+
+/* vue */
+.fade-enter-active, .fade-leave-active {
+   transition: opacity .5s
+ }
+ .fade-enter, .fade-leave {
+   opacity: 0
+ }
