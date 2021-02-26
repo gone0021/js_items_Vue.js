@@ -13,6 +13,7 @@
   <!-- javascript -->
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
-
+  <!-- sxios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios@0.17.1/dist/axios.min.js"></script>
   <!-- <script type="text/javascript" src="./js/main.js" defer></script> -->
 </head>
