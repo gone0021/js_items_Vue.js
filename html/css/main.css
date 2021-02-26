@@ -118,7 +118,6 @@ id
     margin: 5px 0% 0px 70%;
 }
 
-
 /* ============
 html 
 ============*/
@@ -218,8 +217,7 @@ other
 
 /*モーダル*/
 #modal {
-  /* position: absolute; */
-  display:none;
+  z-index:2;
   position: fixed;
   
   top: 50%;
@@ -227,30 +225,41 @@ other
   margin-top:-180px;
   margin-left:-240px;
 
-  background-color: #e6ecf0;
   height: 360px;
   width: 480px;
   padding: 50px 0 40px;
   border-radius: 10px;
+
+  background-color: #e6ecf0;
   text-align: center;
 }
 
-#glayLayer {
-    display: none;
+#overlay {
+    z-index:1;
     position: fixed;
+
     left: 0;
     top: 0;
     height: 100%;
     width: 100%;
+
     background: black;
-    filter: alpha(opacity=60);
-    opacity: 0.60;
+    opacity: 0.50;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* vue */
-.fade-enter-active, .fade-leave-active {
-   transition: opacity .5s
- }
- .fade-enter, .fade-leave {
-   opacity: 0
- }
+.overlay-enter-active{
+  transition: opacity 1.0s;
+
+}
+.overlay-leave-active {
+  transition: opacity 0.0s;
+}
+
+.overlay-enter, .overlay-leave-to {
+  opacity: 0.0;
+}
