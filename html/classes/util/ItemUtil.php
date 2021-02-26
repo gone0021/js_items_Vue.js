@@ -10,9 +10,9 @@ class Itemutil
     {
         $itemModel = new ItemModel();
         $data = array();
-        if (isset($_POST['_post_meny'])) {
+        if (isset($_POST['_post_many'])) {
             // insert
-            if ($_POST['_post_meny'] == 'new_meny') {
+            if ($_POST['_post_many'] == 'new_meny') {
                 for ($i = 0; $i < count($_POST['title']); $i++) {
                     var_dump($_POST);
                     echo '<br><hr>';
