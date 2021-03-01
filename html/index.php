@@ -22,7 +22,7 @@ try {
 $itemUtil = new Itemutil();
 $itemUtil->database();
 
-$tags = ['趣味', '付き合い', '仕事'];
+$tags = ['趣味', '付き合い', '仕事', 'その他'];
 
 $th_title = ['タイトル', '開始日', '終了日', 'タグ', 'メモ', '編集',];
 
@@ -33,6 +33,10 @@ foreach ($items as $k)
 if (isset($_POST['end'])) {
   var_dump($_POST['end']);
 }
+
+// templateの値
+$props = ' :title="title" :start="start" :start-time="startTime" :end="end" :end-time="endTime" :memo="memo" ';
+
 
 ?>
 
@@ -53,7 +57,10 @@ if (isset($_POST['end'])) {
 
       <!-- <div id="new"> -->
       <form action="./index.php" method="post" id="new">
+        <temp-form-items v-for="n in formItems" v-on:form-item-btn="onForm" :tags="tags"></temp-form-items>
+        <temp-new-many v-if="newMany"></temp-new-many>
       </form>
+
 
       <table class="table">
         <!-- tbale header -->
@@ -91,7 +98,7 @@ if (isset($_POST['end'])) {
                 <form action="index.php" method="POST" class="">
                   <input type="hidden" name="id" class="inpId" value="<?= $v['id'] ?>">
 
-                  <button type="button" name="edit" value="<?= $v['id'] ?>" class="mr-2 btnEdit" id="<?= $v['id'] ?>" @click="btnEdit">編集</button>
+                  <button type="button" name="edit" value="<?= $v['id'] ?>" class="mr-2 btnEdit" id="<?= $v['id'] ?>" @click="btnEdit(<?= $v['id'] ?>)">編集</button>
 
                   <input type="submit" name="_post" value="delete" class="btnDel" @click="btnDel">
                 </form>
@@ -104,12 +111,15 @@ if (isset($_POST['end'])) {
 
     <!-- modal -->
     <transition name="overlay" appear>
-      <div id='overlay' @click="onOverlay" v-if="modal" key="modal"></div>
+      <div id='overlay' @click="onOverlay" v-if="modal"></div>
     </transition>
-    <modal-base v-if="modal"></modal-base>
+    <temp-modal v-if="modal" :btn-val="btnVal" :tags="tags" :title="title" :start="start" :start-time="startTime" :end="end" :end-time="endTime" :tag-val="tagVal" :memo="memo" :arr-list="arrList" :obj-list="objList"></temp-modal>
+    <!-- <temp-modal v-if="modal" :btn-val="btnVal" :tags="tags" :arr-list="arrList" :obj-list="objList"></temp-modal> -->
 
   </div>
   <script type="text/javascript" src="./js/main.js"></script>
+  <script type="text/javascript" src="./js/tempModal.js"></script>
+  <script type="text/javascript" src="./js/tempFormItems.js"></script>
 </body>
 
 </html>

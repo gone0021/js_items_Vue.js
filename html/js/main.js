@@ -1,104 +1,136 @@
-let title = '<input type="text" name="title[]" class="mr-2" required placeholder="title">';
-let start = '<input type="date" name="start[]" class="mr-2" required>';
-let end = '<input type="date" name="end[]" class="mr-2" required>';
-let start_time = '<input type="time" name="start_time[]" class="mr-2" required>';
-let end_time = '<input type="time" name="end_time[]" class="mr-2" required>';
-let tag = '<select name="tag[]" id="" class="mr-2">' +
-  '<option value="0">趣味</option>' +
-  '<option value="1">付き合い</option>' +
-  '<option value="2">仕事</option>' +
-  '</select>';
+(function () {
+  'use strict';
 
-let bt_del = '<button type="button" class="btnCancel" @click="btnCancel">削除</button>';
-let bt_new_meny = '<input type="submit" name="_post_meny" value="new_meny" class="mb-2 add" id="tbtNew">';
-let bt_edit = '<button type="button" value="編集">';
+  let app = new Vue({
+    el: '#home',
+    data: {
+      // if
+      modal: false,
+      newMany: false,
 
-let inp_new = '<div class="mb-2 add">' + title + start + start_time + end + end_time + tag + bt_del + '</div>';
+      // child : form,modal
+      tags: ['趣味', '付き合い', '仕事', 'その他'],
+      // tags: {'':' --- ', 0:'趣味', 1:'付き合い', 2:'仕事', 3:'その他'},
 
-let new_flag = false;
-let modal_flag = false;
+      // child : modal
+      objList: {},
+      arrList: [],
+      btnVal: '',
+      title: '',
+      start:'',
+      startTime:'',
+      end:'',
+      endTime:'',
+      tagVal:'',
+      memo:'',
 
-new Vue({
-  el: '#home',
-  data: {
-    // glay: false,
-  },
-  computed: {
-
-  },
-  methods: {
-    // 新規登録ボタン
-    btnNew: function () {
-      // this.glay = true;
-      document.getElementById('glayLayer').style.display = "block";
-      // $("#glayLayer").fadeIn();
-      //    $("#modal").show();
-      //    $("#mForm").append('<input type="submit" name="_post" value="new" id="mbtNew">');
+      // variable
+      formItems: 0,
     },
-    // モーダル背景
-    glayLayer: function () {
-      document.getElementById('glayLayer').style.display = "none";
+    methods: {
+      // 新規登録ボタン
+      btnNew: function () {
+        this.modal = true;
+        this.btnVal = 'new';
+        console.log('btnVal : '+this.btnVal);
 
-      // $("#modal").hide();
-      // $("#mbtNew").remove();
-      // $("#mbtEdit").remove();
-      // $("#mId").remove();
+        // child:modalの値を初期化
+        this.title = '';
+        this.start = '';
+        this.startTime = '';
+        this.end = '';
+        this.endTime = '';
+        this.tagVal = '';
+        this.memo = '';
+      },
+      // モーダル背景
+      onOverlay: function () {
+        this.modal = false;
+      },
+      // +ボタン（追加）
+      btnAdd: function () {
+        if (this.newMany == false) {
+          this.newMany = true;
+        }
+        this.formItems++;
+      },
+      // 追加の削除：$emit
+      onForm: function () {
+        this.formItems--;
+        if(this.formItems == 0) {
+          this.newMany = false;
+        }
+      },
+      // 全キャンセル
+      btnCancelAll: function () {
+        this.formItems = 0;
+        this.newMany = false;
+      },
+      // 編集ボタン
+      btnEdit: function (id) {
+        this.modal = true;
+        this.btnVal = 'edit';
+        console.log(this.btnVal);
+        console.log(id);
+        
+        axios.get('./edit.php', {
+          params: {
+            id: id,
+          }
+        })
+        .then(function (res) {
+          // 取得完了したらlistリストに代入
+          let data = res.data;
 
-      // $('#mTitle').val("");
-      // $('#mStart').val("");
-      // $('#mEnd').val("");
-      // $('#mStartTime').val("");
-      // $('#mEndTime').val("");
-      // $('#mTag').val(0);
-      // $('#mMemo').val("");
+          this.title = data.title;
+          this.start = data.start;
+          this.startTime = data.start_time;
+          this.end = data.end;
+          this.endTime = data.end_time;
+          this.tagVal = data.tag;
+          this.memo = data.memo;
+
+          // this.listObj = data;
+          this.objList = {'title':data.title, 'start':data.start, 'start_time':data.startTime, 'end':data.end, 'end_time':data.endTime, 'memo':data.memo};
+          
+          this.arrList = [data.title, data.start, data.startTime, data.end, data.endTime, data.memo];
+          
+
+          console.log(data);
+          // console.log(title);
+        }
+        .bind(this)).catch(function (e) {
+          console.error(e)
+        })
+
+      },
+      // 削除ボタン
+      btnDel: function (e) {
+        var message = [
+          '削除してよろしいですか？'
+        ].join('\n')
+        if (!window.confirm(message)) {
+          e.preventDefault()
+        }
+      },
     },
+  });
 
-    // +ボタン（追加）
-    btnAdd: function () {
-      let idNew = document.getElementById('new')
-      if (new_flag == false) {
-        new_flag = true;
-        document.getElementById('new').appendChild(document.createElement('div'));
-        $('#new').append(bt_new_meny);
-      }
-      idNew.appendChild(document.createElement('div'));
-      $('#new').prepend(inp_new);
-    },
-    // 追加の削除
-    btnCancel: function () {
-      $(this).parent().remove();
-    },
-    // 全キャンセル
-    btnCancelAll: function () {
-      new_flag = false;
-      $(".add").remove();
-    },
-    // 削除アラート
-    btnDel: function (e) {
-      var message = [
-        '削除してよろしいですか？'
-      ].join('\n')
-      if (!window.confirm(message)) {
-        e.preventDefault()
-      }
-    }
+})();
 
-  },
-
-});
 
 $(function () {
 
   // 編集ボタン
-  $(".btEdit").click(function () {
+  $(".btnEdit").click(function () {
     // idの取得
     let mEditVal = $(this).val();
 
     // モーダル
-    $("#glayLayer").show();
+    $("#overlay").show();
     $("#modal").css("display", "block"); //show()と同じ
     $("#mForm").prepend('<input type="hidden" name="id" value="' + mEditVal + '" id="mId">');
-    $("#mForm").append('<input type="submit" name="_post" value="edit" id="mbtEdit">');
+    // $("#mForm").append('<input type="submit" name="_post" value="edit" id="mbtEdit">');
 
     // 確認用
     // let val = $(this).val();
@@ -106,25 +138,23 @@ $(function () {
 
     // 非同期post
     $.ajax({
-      type: "POST",
+      type: "GET",
       url: "./edit.php",
       data: {
         id: $(this).val()
       },
       //Ajax通信が成功した場合に呼び出されるメソッド
-      success: function (data) {
-        $('#mTitle').val(data.title);
-        $('#mStart').val(data.start);
-        $('#mEnd').val(data.end);
-        $('#mStartTime').val(data.start_time);
-        $('#mEndTime').val(data.end_time);
-        $('#mTag').val(data.tag);
-        $('#mMemo').val(data.memo);
-      },
+    }).done(function (data) {
+        // $('#mTitle').val(data.title);
+        // $('#mStart').val(data.start);
+        // $('#mEnd').val(data.end);
+        // $('#mStartTime').val(data.start_time);
+        // $('#mEndTime').val(data.end_time);
+        // $('#mTag').val(data.tag);
+        // $('#mMemo').val(data.memo);
       //処理がエラーであれば
-      error: function () {
-        alert('なんかおかしい');
-      }
+    }).fail(function () {
+        // alert('なんかおかしい');
     });
   });
 
